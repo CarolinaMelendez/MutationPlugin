@@ -1,11 +1,11 @@
 Class {
-	#name : #'BaselineOfDrTests_TestMutation',
+	#name : #BaselineOfDrTestsMutation,
 	#superclass : #BaselineOf,
-	#category : #'BaselineOfDrTests-TestMutation'
+	#category : #BaselineOfDrTestsMutation
 }
 
 { #category : #baselines }
-BaselineOfDrTests_TestMutation >> baseline: spec [
+BaselineOfDrTestsMutation >> baseline: spec [
 	<baseline>
 	"subclasses should redefine me"
 	
@@ -21,6 +21,6 @@ BaselineOfDrTests_TestMutation >> baseline: spec [
 ]
 
 { #category : #accessing }
-BaselineOfDrTests_TestMutation >> projectClass [
+BaselineOfDrTestsMutation >> projectClass [
     ^ MetacelloCypressBaselineProject
 ]
