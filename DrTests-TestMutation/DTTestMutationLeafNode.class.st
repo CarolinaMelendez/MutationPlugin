@@ -1,7 +1,7 @@
 Class {
 	#name : #DTTestMutationLeafNode,
 	#superclass : #DTTreeLeafNode,
-	#category : #'DrTests-TestMutation'
+	#category : #'DrTests-TestMutation-Model'
 }
 
 { #category : #accessing }
