@@ -17,15 +17,13 @@ DTMutationPluginPresenter >> connectPresenters [
 		whenSelectedItemChangedDo: [ :selectionOptionViewOrNil |
 			selectionOptionViewOrNil
 				ifNotNil: [ |var | . var := self . 
-					selectionOptionViewOrNil updateSelectionOption: drTests currentPlugin.
-					"selectionOptionViewOrNil updateListsDesign: self."
-					self updatePackagesListAndItems .
-					"  . "] ] .
+					selectionOptionViewOrNil resultTreeFor: drTests currentPlugin.
+					self updatePackagesListAndItems ] ] .
 	
-	"resultsList whenSelectionChangedDo: [ :selection | 
+	resultsList whenSelectionChangedDo: [ :selection | 
 		(selection selectedItem isKindOf: DTTestMutationLeafNode) ifTrue: [
 			selection selectedItem ifNotNil: [ :item |
-				self updateDiffPresenter: item content ] ] ]"
+				self updateDiffPresenter: item content ] ] ]
 ]
 
 { #category : #layout }
@@ -72,7 +70,9 @@ DTMutationPluginPresenter >> initializePresenters [
 	startButton := self newButton.
 	startButton action: [ drTests runPlugin ].
 	
-	diffPresenter := self newDiff.
+	diffPresenter := "self newDiff." self instantiate: SpDiffUnifiedPresenter .
+	"diffPresenter := SpDiffUnifiedPresenter new ."
+	diffPresenter showOnlyDestination: true . "displays on only the right panel"
 	diffPresenter showOptions: false .
 ]
 
@@ -89,6 +89,16 @@ DTMutationPluginPresenter >> initializeSelectionViewsDropList [
 DTMutationPluginPresenter >> selectionViewsDropList [
 
 	^ selectionViewsDropList
+]
+
+{ #category : #'as yet unclassified' }
+DTMutationPluginPresenter >> updateDiffPresenter: selectedItem [
+
+diffPresenter 
+			leftText: selectedItem mutant originalMethod ast formattedCode;
+			rightText: (RBParser parseMethod: (selectedItem mutant modifiedSource)) formattedCode .
+			"contextClass: selectedItem mutant originalClass."
+"diffPresenter update ."
 ]
 
 { #category : #'as yet unclassified' }

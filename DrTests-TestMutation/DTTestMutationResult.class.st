@@ -2,7 +2,10 @@ Class {
 	#name : #DTTestMutationResult,
 	#superclass : #DTPluginResult,
 	#instVars : [
-		'aliveMutants'
+		'aliveMutants',
+		'killedMutants',
+		'percentageResult',
+		'mutationScore'
 	],
 	#category : #'DrTests-TestMutation-Base'
 }
@@ -25,11 +28,51 @@ DTTestMutationResult >> buildTreeForUI [
 	^ DTTreeNode new
 		subResults: 
         {(DTTreeNode new
-            name: ' Mutants';
+            name: 'Mutation score: ' , self mutationScore ;
             subResults: {};
             yourself).
-        (DTTreeNode new
+		  (DTTreeNode new
+            name: 'killed mutants';
+            subResults: (self killedMutants collect: [:each | DTTestMutationLeafNode content: each]);
+            yourself).
+		(DTTreeNode new
             name: 'alive mutants';
             subResults: (self aliveMutants collect: [:each | DTTestMutationLeafNode content: each]);
             yourself) }
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> killedMutants [
+
+	^  killedMutants 
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> killedMutants: mutantsList [
+
+	killedMutants := mutantsList
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> mutationScore [ 
+
+	^  mutationScore 
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> mutationScore: aString [
+
+	mutationScore := aString
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> percentageResult [
+
+	^  percentageResult 
+]
+
+{ #category : #accessing }
+DTTestMutationResult >> percentageResult: mutantsList [
+
+	percentageResult := mutantsList
 ]

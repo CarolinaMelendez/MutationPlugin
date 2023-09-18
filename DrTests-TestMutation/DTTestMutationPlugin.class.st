@@ -2,6 +2,8 @@ Class {
 	#name : #DTTestMutationPlugin,
 	#superclass : #DrTestsPlugin,
 	#instVars : [
+		'testsCases',
+		'classesToMutate',
 		'firstListLabel',
 		'firstListItems',
 		'secondListLabel',
@@ -86,6 +88,25 @@ DTTestMutationPlugin >> buildSelectionWithTestPackagesAndClassPackages [
 	secondListItems := package.
 ]
 
+{ #category : #api }
+DTTestMutationPlugin >> defineData: aDTpluginConfiguration [
+
+	| firstList secondList |
+	firstList := aDTpluginConfiguration packagesSelected.
+	secondList := aDTpluginConfiguration items.
+	
+	"ask geraldine"
+	testsCases := firstList.
+	(firstList anyOne isKindOf: RPackage)
+		ifTrue: [ testsCases := firstList flatCollect: [ :p |
+				              p definedClasses select: [ :c | c isTestCase ] ] ].
+		
+	(secondList anyOne isKindOf: RPackage)
+		ifTrue: [ classesToMutate := secondList flatCollect: [ :p |
+				                   p definedClasses select: [ :c | c isTestCase not] ] ]
+		ifFalse: [ classesToMutate := secondList ]
+]
+
 { #category : #accessing }
 DTTestMutationPlugin >> firstListLabel [
 
@@ -133,30 +154,31 @@ DTTestMutationPlugin >> resultButtonHelp [
 { #category : #api }
 DTTestMutationPlugin >> runForConfiguration: aDTpluginConfiguration [
 
-	| analysis alive testCases classesToMutate result|
-	 testCases :=  { UUIDPrimitivesTest }.
-	 classesToMutate := {UUIDGenerator }.
-
-	 analysis := MutationTestingAnalysis
-    	testCasesFrom: testCases
-    	mutating: classesToMutate
-    	using: MutantOperator contents
-    	with: AllTestsMethodsRunningMutantEvaluationStrategy new.
-
-	 analysis run.
-
-"To retrieve the alive mutations"
-alive := analysis generalResult aliveMutants.
-
-
-
+	| result analysis alive killed percent analysisResult|
 	result := self pluginResultClass new.
-	"self defineData: aDTpluginConfiguration."
-	
-	result
-		aliveMutants: alive .
+	self defineData: aDTpluginConfiguration.
+
+	analysis := MutationTestingAnalysis
+		            testCasesFrom: testsCases
+		            mutating: classesToMutate
+		            using: MutantOperator contents
+		            with: AllTestsMethodsRunningMutantEvaluationStrategy new.
+	analysis run.
+	analysisResult := analysis generalResult .
+	alive := analysisResult aliveMutants "collect: [:each | each asString ]. " .
+	killed := analysisResult killedMutants "collect: [:each | each asString ]. " .
+	percent := analysisResult numberOfEvaluatedMutants printString , ' mutants, '
+	           , analysisResult numberOfKilledMutants printString , ' killed, '
+	           , analysisResult numberOfAliveMutants printString , ' alive, '
+	           , analysisResult numberOfTerminatedMutants printString
+	           , ' terminated. Mutation Score: '
+	           , analysisResult mutationScore printString , '%.'.
 
 	^ result
+		  aliveMutants: alive;
+		  killedMutants: killed;
+		  percentageResult: percent;
+		  mutationScore: analysisResult mutationScore printString , '%.' .
 ]
 
 { #category : #accessing }
