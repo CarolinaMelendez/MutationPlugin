@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfDrTestsMutation,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfDrTestsMutation
+	#name : 'BaselineOfDrTestsMutation',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfDrTestsMutation',
+	#package : 'BaselineOfDrTestsMutation'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfDrTestsMutation >> baseline: spec [
 	<baseline>
 	"subclasses should redefine me"
@@ -15,12 +16,12 @@ BaselineOfDrTestsMutation >> baseline: spec [
 			package: #'DrTests-TestMutation' .
 	spec
 	baseline: 'MuTalk'
-	with: [ spec repository: 'github://pharo-contributions/mutalk/src' ]
+	with: [ spec repository: 'github://CarolinaMelendez/mutalk/src:nonStrictMode' ]
 ]
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfDrTestsMutation >> projectClass [
     ^ MetacelloCypressBaselineProject
 ]
