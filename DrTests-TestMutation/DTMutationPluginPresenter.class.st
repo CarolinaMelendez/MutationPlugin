@@ -70,9 +70,8 @@ DTMutationPluginPresenter >> initializePresenters [
 	startButton := self newButton.
 	startButton action: [ drTests runPlugin ].
 	
-	diffPresenter := "self newDiff." self instantiate: SpDiffUnifiedPresenter .
-	"diffPresenter := SpDiffUnifiedPresenter new ."
-	diffPresenter showOnlyDestination: true . "displays on only the right panel"
+	diffPresenter := self newDiff. "self instantiate: SpDiffUnifiedPresenter"
+	diffPresenter beWrapped: false .
 	diffPresenter showOptions: false .
 ]
 
@@ -91,17 +90,22 @@ DTMutationPluginPresenter >> selectionViewsDropList [
 	^ selectionViewsDropList
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 DTMutationPluginPresenter >> updateDiffPresenter: selectedItem [
 
+
+(selectedItem mutant operator isKindOf: RemoveCaretOperator )
+ifTrue: [ diffPresenter showOnlySource: true  ]
+ifFalse:[diffPresenter showOnlyDestination: true  ] .
+	
 diffPresenter 
 			leftText: selectedItem mutant originalMethod ast formattedCode;
-			rightText: (RBParser parseMethod: (selectedItem mutant modifiedSource)) formattedCode .
-			"contextClass: selectedItem mutant originalClass."
-"diffPresenter update ."
+			rightText: (RBParser parseMethod: (selectedItem mutant modifiedSource)) formattedCode;
+			contextClass: selectedItem mutant originalClass.
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 DTMutationPluginPresenter >> updatePackagesListAndItems [
 
 	self updatePackagesList.
@@ -109,7 +113,7 @@ DTMutationPluginPresenter >> updatePackagesListAndItems [
 	self updateItemsListLabel.
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 DTMutationPluginPresenter >> updatePresenter [
 
 	super updatePresenter.
@@ -124,7 +128,7 @@ DTMutationPluginPresenter >> updatePresenter [
 	startButton help: plugin startButtonHelp
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 DTMutationPluginPresenter >> updateSelectionViewsDropList [
 	| newPragmas |
 
