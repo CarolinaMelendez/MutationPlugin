@@ -58,6 +58,13 @@ DTMutationPluginPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
+DTMutationPluginPresenter >> initializeOwnDiffPresenter [
+
+	SpApplication defaultApplication backend resetAdapterBindings.
+	StPharoApplication current backend resetAdapterBindings.
+]
+
+{ #category : 'initialization' }
 DTMutationPluginPresenter >> initializePresenters [
 
 	super initializePresenters.
@@ -67,7 +74,8 @@ DTMutationPluginPresenter >> initializePresenters [
 		initializeItemsListAndLabel;
 		initializeResultsTreeAndLabel;
 		initializeResultViewsDropList;
-		initializeSelectionViewsDropList.
+		initializeSelectionViewsDropList;
+		initializeOwnDiffPresenter.
 
 	startButton := self newButton.
 	startButton action: [ drTests runPlugin ].
