@@ -1,28 +1,30 @@
 Class {
-	#name : #DTTestMutationResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTTestMutationResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'aliveMutants',
 		'killedMutants',
 		'percentageResult',
 		'mutationScore'
 	],
-	#category : #'DrTests-TestMutation-Base'
+	#category : 'DrTests-TestMutation-Base',
+	#package : 'DrTests-TestMutation',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> aliveMutants [
 
 	^  aliveMutants 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> aliveMutants: mutantsList [
 
 	aliveMutants := mutantsList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> buildTreeForUI [
 	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
@@ -41,37 +43,37 @@ DTTestMutationResult >> buildTreeForUI [
             yourself) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> killedMutants [
 
 	^  killedMutants 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> killedMutants: mutantsList [
 
 	killedMutants := mutantsList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> mutationScore [ 
 
 	^  mutationScore 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> mutationScore: aString [
 
 	mutationScore := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> percentageResult [
 
 	^  percentageResult 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationResult >> percentageResult: mutantsList [
 
 	percentageResult := mutantsList

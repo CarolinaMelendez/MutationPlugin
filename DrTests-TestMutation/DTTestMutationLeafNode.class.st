@@ -1,10 +1,12 @@
 Class {
-	#name : #DTTestMutationLeafNode,
-	#superclass : #DTTreeLeafNode,
-	#category : #'DrTests-TestMutation-Model'
+	#name : 'DTTestMutationLeafNode',
+	#superclass : 'DTTreeLeafNode',
+	#category : 'DrTests-TestMutation-Model',
+	#package : 'DrTests-TestMutation',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationLeafNode >> drTestsName [
 
 	| originalString |

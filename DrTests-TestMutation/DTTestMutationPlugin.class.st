@@ -1,6 +1,6 @@
 Class {
-	#name : #DTTestMutationPlugin,
-	#superclass : #DrTestsPlugin,
+	#name : 'DTTestMutationPlugin',
+	#superclass : 'DrTestsPlugin',
 	#instVars : [
 		'testsCases',
 		'classesToMutate',
@@ -9,28 +9,30 @@ Class {
 		'secondListLabel',
 		'secondListItems'
 	],
-	#category : #'DrTests-TestMutation-Base'
+	#category : 'DrTests-TestMutation-Base',
+	#package : 'DrTests-TestMutation',
+	#tag : 'Base'
 }
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestMutationPlugin class >> pluginName [
 
 	^ 'Test Mutation'
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestMutationPlugin class >> pluginResultClass [
 
 	^ DTTestMutationResult
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestMutationPlugin class >> weight [
 
 	^ 3
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DTTestMutationPlugin >> buildSelectionWithTestCasesAndClasses [
 
 	<dtTestsMutationSelection: 'Selection with Test Cases and Classes' order: 2>
@@ -51,7 +53,7 @@ DTTestMutationPlugin >> buildSelectionWithTestCasesAndClasses [
 		                   p definedClasses select: [ :c | c isTestCase not ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DTTestMutationPlugin >> buildSelectionWithTestPackageAndClasses [
 	<dtTestsMutationSelection: 'Selection with Test Packages and Classes' order: 1>
 
@@ -70,7 +72,7 @@ DTTestMutationPlugin >> buildSelectionWithTestPackageAndClasses [
 		                   p definedClasses select: [ :c | c isTestCase not ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DTTestMutationPlugin >> buildSelectionWithTestPackagesAndClassPackages [
 	<dtTestsMutationSelection: 'Selection with Test Packages and Class Packages' order: 3>
 
@@ -88,7 +90,7 @@ DTTestMutationPlugin >> buildSelectionWithTestPackagesAndClassPackages [
 	secondListItems := package.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> defineData: aDTpluginConfiguration [
 
 	| firstList secondList |
@@ -107,20 +109,20 @@ DTTestMutationPlugin >> defineData: aDTpluginConfiguration [
 		ifFalse: [ classesToMutate := secondList ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationPlugin >> firstListLabel [
 
 	firstListLabel ifNil: [ ^ 'is Nil' ].
 	^ firstListLabel
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	^ secondListItems
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> packagesAvailableForAnalysis [
 	"by default it will display the testpackages with classes"
 
@@ -129,29 +131,29 @@ DTTestMutationPlugin >> packagesAvailableForAnalysis [
 	^ firstListItems
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 DTTestMutationPlugin >> pluginPresenterClass [
 
 	^ DTMutationPluginPresenter 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationPlugin >> pragmaForResultTrees [
 	^ #'dtTestMutationResultTreeNamed:order:'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> pragmaForSelectionPackagesAndItems [
 
 	^ #dtTestsMutationSelection:order:
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> resultButtonHelp [
 	^ 'Browse the mutation selected in the results list.' translated
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> runForConfiguration: aDTpluginConfiguration [
 
 	| result analysis alive killed percent analysisResult|
@@ -181,14 +183,14 @@ DTTestMutationPlugin >> runForConfiguration: aDTpluginConfiguration [
 		  mutationScore: analysisResult mutationScore printString , '%.' .
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestMutationPlugin >> secondListLabel [
 
 	secondListLabel ifNil: [ ^ 'is Nil' ].
 	^ secondListLabel 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DTTestMutationPlugin >> selectionOptionViews [
 	"Return the selction options available."
 
@@ -206,12 +208,12 @@ DTTestMutationPlugin >> selectionOptionViews [
 			  blockToExtractViewFromResult: pragma methodSelector]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> startButtonHelp [
 	^ 'Run mutation in selected items' translated
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestMutationPlugin >> startButtonLabel [
 	^ 'Run Mutation' translated
 ]

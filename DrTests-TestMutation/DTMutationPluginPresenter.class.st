@@ -1,14 +1,16 @@
 Class {
-	#name : #DTMutationPluginPresenter,
-	#superclass : #DTDefaultPluginPresenter,
+	#name : 'DTMutationPluginPresenter',
+	#superclass : 'DTDefaultPluginPresenter',
 	#instVars : [
 		'selectionViewsDropList',
 		'diffPresenter'
 	],
-	#category : #'DrTests-TestMutation-Spec'
+	#category : 'DrTests-TestMutation-Spec',
+	#package : 'DrTests-TestMutation',
+	#tag : 'Spec'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTMutationPluginPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -26,7 +28,7 @@ DTMutationPluginPresenter >> connectPresenters [
 				self updateDiffPresenter: item content ] ] ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DTMutationPluginPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -55,7 +57,7 @@ DTMutationPluginPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTMutationPluginPresenter >> initializePresenters [
 
 	super initializePresenters.
@@ -70,12 +72,13 @@ DTMutationPluginPresenter >> initializePresenters [
 	startButton := self newButton.
 	startButton action: [ drTests runPlugin ].
 	
-	diffPresenter := self newDiff. "self instantiate: SpDiffUnifiedPresenter"
+	diffPresenter := "self newDiff." self instantiate: SpDiffUnifiedPresenter .
+	diffPresenter showOnlyDestination: true .
 	diffPresenter beWrapped: false .
 	diffPresenter showOptions: false .
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTMutationPluginPresenter >> initializeSelectionViewsDropList [
 
 	selectionViewsDropList := self newDropList.
@@ -84,28 +87,28 @@ DTMutationPluginPresenter >> initializeSelectionViewsDropList [
 		display: [ :resultTreeView | resultTreeView name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTMutationPluginPresenter >> selectionViewsDropList [
 
 	^ selectionViewsDropList
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTMutationPluginPresenter >> updateDiffPresenter: selectedItem [
 
 
-(selectedItem mutant operator isKindOf: RemoveCaretOperator )
+"(selectedItem mutant operator isKindOf: RemoveCaretOperator )
 ifTrue: [ diffPresenter showOnlySource: true  ]
-ifFalse:[diffPresenter showOnlyDestination: true  ] .
+ifFalse:[diffPresenter showOnlyDestination: true  ] ."
 	
 diffPresenter 
 			leftText: selectedItem mutant originalMethod ast formattedCode;
-			rightText: (RBParser parseMethod: (selectedItem mutant modifiedSource)) formattedCode;
-			contextClass: selectedItem mutant originalClass.
+			rightText: (RBParser parseMethod: (selectedItem mutant modifiedSource)) formattedCode.
+			"contextClass: selectedItem mutant originalClass."
 
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTMutationPluginPresenter >> updatePackagesListAndItems [
 
 	self updatePackagesList.
@@ -113,7 +116,7 @@ DTMutationPluginPresenter >> updatePackagesListAndItems [
 	self updateItemsListLabel.
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTMutationPluginPresenter >> updatePresenter [
 
 	super updatePresenter.
@@ -128,7 +131,7 @@ DTMutationPluginPresenter >> updatePresenter [
 	startButton help: plugin startButtonHelp
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTMutationPluginPresenter >> updateSelectionViewsDropList [
 	| newPragmas |
 
